@@ -4,7 +4,7 @@
 
 # Tổng quan
 
-* Dự án này là một hệ thống máy chủ cá nhân (Homelab) được xây dựng theo kiến trúc **Microservices phân tách độc lập**. Thay vì gom tất cả vào một cụm duy nhất, hệ thống được chia nhỏ thành các `services` riêng biệt.
+Dự án này là một hệ thống máy chủ cá nhân (Homelab) được xây dựng theo kiến trúc **Microservices phân tách độc lập**. Thay vì gom tất cả vào một cụm duy nhất, hệ thống được chia nhỏ thành các `services` riêng biệt.
 
 ### 1. File Automation Engine (Quản lý File & Tự động hóa)
 
@@ -26,3 +26,12 @@
   * **Write (Ghi dữ liệu):** File được lưu vào thư mục vật lý trên hệ thống thông qua cơ chế mount.
   * **Listen (Giám sát):** Node-RED sử dụng node `watch` để phát hiện các sự kiện thay đổi trong thư mục (file created hoặc modified).
   * **Execute (Thực thi):** Node-RED thu thập metadata của file (tên file, thời gian tạo,...) và kích hoạt API của dịch vụ bên thứ ba (ví dụ: Telegram) để gửi thông báo đến quản trị viên.
+
+### 2. Tích hợp Shadow Backup & Audit Trail
+
+Trong quá trình làm bài em thấy việc chỉ cảnh báo là chưa đủ an toàn nếu người dùng vô tình hoặc cố ý xóa/sửa file quan trọng. Vì vậy, hệ thống được nâng cấp thêm tính năng **Shadow Backup (Sao lưu ngầm)** với luồng xử lý như sau:
+
+* **Bổ sung Storage Layer:** Tạo thêm một vùng nhớ độc lập `/backup`. Vùng nhớ này chỉ Node-RED và Admin có quyền truy cập, người dùng File Browser không thể nhìn thấy để can thiệp.
+* **Thêm mới:** Node-RED phát hiện file mới -> Copy file gốc sang `/backup` -> Gửi Telegram báo cáo.
+* **Chỉnh sửa:** Node-RED phát hiện file bị sửa -> Copy bản sửa đó sang `/backup`, tự động gắn thêm Timestamp (Versioning) để không đè lên bản gốc -> Gửi Telegram cảnh báo.
+* **Xóa:** Node-RED phát hiện file bị xóa trên File Browser -> Gửi Telegram báo động đỏ (Dữ liệu vẫn nằm an toàn trong `/backup` chờ Admin xử lý).
