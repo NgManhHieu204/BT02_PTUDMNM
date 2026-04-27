@@ -1,0 +1,243 @@
+[
+    {
+        "id": "53e37fead0051f0d",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "00e59c0c8b8dab44",
+        "type": "telegram bot",
+        "botname": "Bot",
+        "usernames": "",
+        "chatids": "",
+        "baseapiurl": "",
+        "testenvironment": false,
+        "updatemode": "polling",
+        "pollinterval": 300,
+        "usesocks": false,
+        "sockshost": "",
+        "socksprotocol": "socks5",
+        "socksport": 6667,
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbothost": "0.0.0.0",
+        "localbotport": 8443,
+        "publicbotport": 8443,
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    },
+    {
+        "id": "2b882b0de4ecf6d4",
+        "type": "telegram sender",
+        "z": "53e37fead0051f0d",
+        "name": "",
+        "bot": "00e59c0c8b8dab44",
+        "haserroroutput": true,
+        "outputs": 2,
+        "x": 930,
+        "y": 280,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "153e36f121ebbfaa",
+        "type": "watch-directory",
+        "z": "53e37fead0051f0d",
+        "folder": "/shared_data",
+        "folderType": "str",
+        "recursive": 0,
+        "typeEvent": "create",
+        "ignoreInitial": true,
+        "ignoredFiles": "",
+        "ignoredFilesType": "re",
+        "name": "Sự kiện Upload",
+        "x": 140,
+        "y": 160,
+        "wires": [
+            [
+                "119443a29c7cfba2",
+                "25af1e37e2dc7d09"
+            ]
+        ]
+    },
+    {
+        "id": "c5585c5c57d96d22",
+        "type": "watch-directory",
+        "z": "53e37fead0051f0d",
+        "folder": "/shared_data",
+        "folderType": "str",
+        "recursive": 0,
+        "typeEvent": "update",
+        "ignoreInitial": true,
+        "ignoredFiles": "",
+        "ignoredFilesType": "re",
+        "name": "Sự kiện Modify",
+        "x": 120,
+        "y": 360,
+        "wires": [
+            [
+                "93a677208aca5287",
+                "9dacfd87d24574ff"
+            ]
+        ]
+    },
+    {
+        "id": "d33000d19e3026c2",
+        "type": "watch-directory",
+        "z": "53e37fead0051f0d",
+        "folder": "/shared_data",
+        "folderType": "str",
+        "recursive": 0,
+        "typeEvent": "delete",
+        "ignoreInitial": true,
+        "ignoredFiles": "",
+        "ignoredFilesType": "re",
+        "name": "Sự kiện Dlete",
+        "x": 150,
+        "y": 520,
+        "wires": [
+            [
+                "4e2dc7529243bc94"
+            ]
+        ]
+    },
+    {
+        "id": "119443a29c7cfba2",
+        "type": "function",
+        "z": "53e37fead0051f0d",
+        "name": "Tạo tin nhắn Upload",
+        "func": "// Lấy đường dẫn file\nvar filePath = msg.payload; \n\n// Tách lấy tên file\nvar fileName = filePath.split('/').pop(); \n\nmsg.payload = {\n    chatId: \"YOUR_CHAT_ID_HERE\", \n    type: \"message\",\n    content: \"🟢 [HỆ THỐNG HOMELAB]\\nBạn ơi, Phát hiện tệp tin \" + fileName +  \" mới được bổ sung vào phân vùng lưu trữ chung. \"\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 100,
+        "wires": [
+            [
+                "2b882b0de4ecf6d4"
+            ]
+        ]
+    },
+    {
+        "id": "25af1e37e2dc7d09",
+        "type": "function",
+        "z": "53e37fead0051f0d",
+        "name": "Lệnh Backup",
+        "func": "// Lấy đường dẫn file gốc\nvar filePath = msg.payload;\n\n// Tách lấy tên file\nvar fileName = filePath.split('/').pop();\n\n// Tạo lệnh copy của Linux\nmsg.payload = \"cp '\" + filePath + \"' '/backup/\" + fileName + \"'\";\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 220,
+        "wires": [
+            [
+                "80433b20d4e4744e"
+            ]
+        ]
+    },
+    {
+        "id": "80433b20d4e4744e",
+        "type": "exec",
+        "z": "53e37fead0051f0d",
+        "command": "",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 590,
+        "y": 260,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "93a677208aca5287",
+        "type": "function",
+        "z": "53e37fead0051f0d",
+        "name": "Xử lý Versioning & Backup",
+        "func": "// Lấy thông tin file đầu vào\nvar filePath = msg.payload;\nvar fullFileName = filePath.split('/').pop();\n\n// Bóc tách tên gốc và phần mở rộng\nvar extIndex = fullFileName.lastIndexOf('.');\nvar baseName = extIndex !== -1 ? fullFileName.substring(0, extIndex) : fullFileName;\nvar ext = extIndex !== -1 ? fullFileName.substring(extIndex) : '';\n\n// Khởi tạo chuỗi định dạng Timestamp: YYYYMMDD_HHMMSS\nvar d = new Date();\nvar timestamp = d.getFullYear() + \n                (\"0\" + (d.getMonth() + 1)).slice(-2) + \n                (\"0\" + d.getDate()).slice(-2) + \"_\" + \n                (\"0\" + d.getHours()).slice(-2) + \n                (\"0\" + d.getMinutes()).slice(-2) + \n                (\"0\" + d.getSeconds()).slice(-2);\n\n// Định dạng tên tệp mới\nvar newFileName = baseName + \"_modified_\" + timestamp + ext;\n\n// Khởi tạo lệnh sao lưu\nmsg.payload = \"cp '\" + filePath + \"' '/backup/\" + newFileName + \"'\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 320,
+        "wires": [
+            [
+                "80433b20d4e4744e"
+            ]
+        ]
+    },
+    {
+        "id": "9dacfd87d24574ff",
+        "type": "function",
+        "z": "53e37fead0051f0d",
+        "name": "Tin nhắn Cảnh báo Modify",
+        "func": "var fileName = msg.payload.split('/').pop();\n\nmsg.payload = {\n    chatId: \"YOUR_CHAT_ID_HERE\",\n    type: \"message\",\n    content: \"⚠️ [HỆ THỐNG HOMELAB]\\n Bạn ơi! Tệp tin \" + fileName +  \" trên hệ thống vừa bị thay đổi nội dung. Hệ thống đã tự động khởi tạo bản sao lưu phiên bản mới.\"\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 400,
+        "wires": [
+            [
+                "2b882b0de4ecf6d4"
+            ]
+        ]
+    },
+    {
+        "id": "4e2dc7529243bc94",
+        "type": "function",
+        "z": "53e37fead0051f0d",
+        "name": "Tin nhắn Cảnh báo Delete",
+        "func": "// Bóc tách tên tệp tin bị xóa từ payload đầu vào\nvar filePath = msg.payload;\nvar fileName = filePath.split('/').pop();\n\n// Cấu trúc gói tin gửi qua API Telegram với cờ hiệu khẩn cấp\nmsg.payload = {\n    chatId: \"YOUR_CHAT_ID_HERE\",\n    type: \"message\",\n    content: \"🚨 [HỆ THỐNG HOMELAB]\\nBạn ơi! Tệp tin \" + fileName + \" vừa bị xóa khỏi hệ thống. Vui lòng kiểm tra phân vùng /backup để tiến hành khôi phục nếu cần thiết. \"\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 520,
+        "wires": [
+            [
+                "2b882b0de4ecf6d4"
+            ]
+        ]
+    },
+    {
+        "id": "c1c7b0428758643a",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-telegrambot": "17.1.3",
+            "node-red-contrib-watchdirectory": "1.0.15"
+        }
+    }
+]
