@@ -6,6 +6,8 @@
 
 Dự án này là một hệ thống máy chủ cá nhân (Homelab) được xây dựng theo kiến trúc **Microservices phân tách độc lập**. Thay vì gom tất cả vào một cụm duy nhất, hệ thống được chia nhỏ thành các `services` riêng biệt.
 
+## File Browser + Node-RED
+
 ### 1. File Automation Engine (Quản lý File & Tự động hóa)
 
 * **Công nghệ cốt lõi:** File Browser + Node-RED + Docker.
@@ -35,3 +37,7 @@ Trong quá trình làm bài em thấy việc chỉ cảnh báo là chưa đủ a
 * **Thêm mới:** Node-RED phát hiện file mới -> Copy file gốc sang `/backup` -> Gửi Telegram báo cáo.
 * **Chỉnh sửa:** Node-RED phát hiện file bị sửa -> Copy bản sửa đó sang `/backup`, tự động gắn thêm Timestamp (Versioning) để không đè lên bản gốc -> Gửi Telegram cảnh báo.
 * **Xóa:** Node-RED phát hiện file bị xóa trên File Browser -> Gửi Telegram báo động đỏ (Dữ liệu vẫn nằm an toàn trong `/backup` chờ Admin xử lý).
+
+# MỤC LỤC
+
+**[Xem chi tiết toàn bộ Quá trình Triển khai và Kiểm thử (Testing) của File Automation Engine tại đây.](docs/file_automation.md)**
