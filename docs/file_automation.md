@@ -411,6 +411,10 @@ Trong các phiên bản sau, có thể nghiên cứu tích hợp thêm kịch b�
  
     <img width="1207" height="540" alt="image" src="https://github.com/user-attachments/assets/247a7192-96b5-4006-bb4d-b05a9ee1a35a" />
 
+  - Push lên Docker Hub thành công
+ 
+    <img width="1897" height="1009" alt="image" src="https://github.com/user-attachments/assets/73c4ae7a-b8a4-4233-a9a3-d8cac0a14e34" />
+
 - Cập nhật docker-compose.yml: thay `build: ./node-red-custom` thành `image: mhieu2004/node-red-shadow-backup:v1`
 
   <img width="982" height="618" alt="image" src="https://github.com/user-attachments/assets/1f531413-445a-4e7c-970c-86d1d8cea3ab" />
