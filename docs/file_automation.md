@@ -1,6 +1,8 @@
-# Cấu trúc thư mục triển khai (Directory Structure)
+# Cấu trúc thư mục triển khai và mã nguồn hệ thống (Directory Structure)
 
 Hệ thống được tổ chức theo kiến trúc container hóa, trong đó các service được định nghĩa thông qua Docker Compose. Dữ liệu được phân mảnh và cô lập thông qua cơ chế Volume để đảm bảo tính bền vững (Persistent), khả năng mở rộng và an toàn thông tin.
+
+- Cấu trúc thư mục
 
 ```text
 file-automation/
@@ -13,6 +15,12 @@ file-automation/
 └── node-red-custom/
     └── Dockerfile       # Chỉ thị đóng gói (Dockerfile) dùng để build custom Node-RED image
 ```
+
+- Mã nguồn hệ thống:
+  
+  - Bản vẽ triển khai hạ tầng: [docker-compose.yml](../file-automation/docker-compose.yml)
+  - Chỉ thị đóng gói tùy chỉnh: [Dockerfile](../file-automation/node-red-custom/Dockerfile)
+  - Luồng logic tự động hóa (JSON Export): [node_red_shadow_backup_flow.json](../file-automation/node_red_shadow_backup_flow.json)
 
 # Tạo cấu trúc thư mục
 
