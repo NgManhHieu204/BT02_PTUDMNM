@@ -1,0 +1,31 @@
+services:
+  filebrowser:
+    image: filebrowser/filebrowser:latest
+    container_name: filebrowser_app
+    ports:
+      - "8080:80"
+    volumes:
+      - ./shared_data:/srv
+      - ./fb_data:/database
+    restart: unless-stopped
+    networks:
+      - homelab_net
+
+  nodered:
+    build: ./node-red-custom
+    container_name: nodered_app
+    environment:
+      - NODE_OPTIONS=--dns-result-order=ipv4first
+    ports:
+      - "1880:1880"
+    volumes:
+      - ./nodered_data:/data
+      - ./shared_data:/shared_data
+      - ./backup_data:/backup
+    restart: unless-stopped
+    networks:
+      - homelab_net
+
+networks:
+  homelab_net:
+    external: true

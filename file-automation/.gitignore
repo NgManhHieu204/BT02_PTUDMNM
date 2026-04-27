@@ -1,0 +1,5 @@
+# Bỏ qua các thư mục chứa dữ liệu và cấu hình cá nhân
+shared_data/
+backup_data/
+nodered_data/
+fb_data/
