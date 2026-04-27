@@ -386,3 +386,39 @@ Khi người dùng tải lên toàn bộ một thư mục (Folder), hệ thống
 ## Hướng phát triển (Future Work)
 
 Trong các phiên bản sau, có thể nghiên cứu tích hợp thêm kịch bản bash shell tự động nén (auto-zip) trên server khi phát hiện sự kiện tải lên thư mục.
+
+# Tối ưu hóa Triển khai với Docker Hub
+
+- Đăng nhập Docker Hub bằng cách chạy lệnh `docker login`
+
+  <img width="1234" height="285" alt="image" src="https://github.com/user-attachments/assets/54bd13f3-450e-493d-80e5-6126ffd0f2ce" />
+
+- Tại Trang `https://login.docker.com/activate` nhập code và đăng nhập vào Docker Hub
+
+  <img width="1531" height="869" alt="image" src="https://github.com/user-attachments/assets/0fa94060-67c5-4568-af03-d3de8fee0bea" />
+
+- Đăng nhập thành công:
+
+  <img width="1259" height="432" alt="image" src="https://github.com/user-attachments/assets/3e3584b4-7f5a-4b23-bba9-97d0cadbf1bf" />
+
+- Đóng gói và Đẩy lên Docker Hub
+
+  - Chạy lệnh `docker build -t mhieu2004/node-red-shadow-backup:v1 ./node-red-custom` để build images
+
+    <img width="1466" height="465" alt="image" src="https://github.com/user-attachments/assets/e7bc7185-1c8a-4864-bcc8-f9e2d4e8989d" />
+
+  - Chạy lệnh `docker push mhieu2004/node-red-shadow-backup:v1` để push lên Docker Hub
+ 
+    <img width="1207" height="540" alt="image" src="https://github.com/user-attachments/assets/247a7192-96b5-4006-bb4d-b05a9ee1a35a" />
+
+- Cập nhật docker-compose.yml: thay `build: ./node-red-custom` thành `image: mhieu2004/node-red-shadow-backup:v1`
+
+  <img width="982" height="618" alt="image" src="https://github.com/user-attachments/assets/1f531413-445a-4e7c-970c-86d1d8cea3ab" />
+
+- Lợi ích
+  
+  - Loại bỏ hoàn toàn rủi ro khi cài đặt thư viện (`node-red-contrib-watchdirectory`, `node-red-contrib-telegrambot`).
+    
+  - Thời gian triển khai giảm từ vài phút xuống còn vài giây.
+    
+  - Đảm bảo tính nhất quán (Consistency) 100% trên mọi môi trường máy chủ khác nhau (Dev/Test/Prod). Môi trường mới chỉ cần tải file `docker-compose.yml` và chạy `docker compose up -d`.
