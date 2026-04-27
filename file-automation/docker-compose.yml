@@ -12,7 +12,7 @@ services:
       - homelab_net
 
   nodered:
-    build: ./node-red-custom
+    image: mhieu2004/node-red-shadow-backup:v1
     container_name: nodered_app
     environment:
       - NODE_OPTIONS=--dns-result-order=ipv4first
