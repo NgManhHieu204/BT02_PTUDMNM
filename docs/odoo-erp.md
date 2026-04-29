@@ -213,3 +213,52 @@ Một trong những ưu điểm lớn nhất của hệ thống Odoo ERP là cơ
 - Trạng thái 3: Thủ kho bấm Xác nhận giao hàng (Validate Delivery)
 
   - On Hand = 19, Forecasted = 19: Kiện hàng chính thức rời khỏi kho vật lý, giao cho đơn vị vận chuyển. Lúc này On Hand bị trừ đi 1, cân bằng lại với Forecasted, hoàn tất toàn bộ chu trình bán hàng - xuất kho
+
+
+## Hoàn thiện website
+
+### Nâng cấp trải nghiệm mua sắm
+
+- **Wishlist (Danh sách yêu thích)**: Cho phép khách hàng "thả tim" các món đồ họ thích nhưng chưa đủ tiền mua ngay, lưu lại để theo dõi sau
+
+- **Product Comparison (So sánh sản phẩm)**:  Khách có thể tích chọn 2 chiếc bàn phím để đưa lên bàn cân so sánh chi tiết từng thông số
+
+- Cách thực hiện: vào Website ➔ Configuration (Cấu hình) ➔ Settings (Cài đặt). Cuộn xuống phần Shop - Products, tích chọn vào Product Comparison Tool và Wishlist
+
+  <img width="1919" height="993" alt="Screenshot 2026-04-29 163655" src="https://github.com/user-attachments/assets/1dc8d5b9-7538-462e-ba80-5a8378285542" />
+
+### Tối ưu Luồng Thanh toán
+
+- Guest Checkout (Mua hàng không cần đăng nhập): Khách chỉ cần điền Tên, Số điện thoại, Địa chỉ nhận hàng là xong, không cần phải đăng nhập mới đặt hàng được
+
+- B2B / B2C: Cấu hình tự động hiển thị giá đã bao gồm thuế (VAT)
+
+- Cách thực hiện: vào Website ➔ Configuration (Cấu hình) ➔ Settings (Cài đặt). Cuộn xuống phần Shop - Checkout Process, tại mục Sign in/Up at checkout, chọn Optional (Tùy chọn)
+
+  <img width="1912" height="993" alt="Screenshot 2026-04-29 171032" src="https://github.com/user-attachments/assets/df19523c-76ab-4f98-9ae6-61b8b6eae19b" />
+
+### Kênh Hỗ trợ Khách hàng Trực tuyến (Live Chat)
+
+- Odoo tích hợp sẵn một module Live Chat cực kỳ mạnh mẽ, liên thông thẳng với hệ thống Discuss (nhắn tin nội bộ)
+
+- Cách thực hiện: tại màn hình chính (biểu tượng 9 ô vuông) ➔ Apps (Ứng dụng) ➔ Tìm từ khóa Live Chat và bấm ACTIVATE
+
+  <img width="1914" height="948" alt="image" src="https://github.com/user-attachments/assets/a6dac0fe-fc97-46fc-b1cf-79ac08478700" />
+
+- Sau khi cài xong để gắn nó lên Web: vào Website ➔ Configuration (Cấu hình) ➔ Settings (Cài đặt). Cuộn xuống tìm mục Live Chat, tích chọn nó và ô Channel (Kênh) chọn YourWebsite.com rồi bấm Save (Lưu)
+
+  <img width="1915" height="1020" alt="image" src="https://github.com/user-attachments/assets/36e1d57e-3387-42ba-b336-58f1e63bcceb" />
+
+- Sau khi lưu thành công, bấm vào biểu tượng 9 ô vuông ➔ Live Chat. Lúc này sẽ thấy một kênh có tên là YourWebsite.com cùng với một nút màu tím ghi chữ JOIN (Tham gia), bấm JOIN để tham gia
+ 
+  <img width="1916" height="923" alt="image" src="https://github.com/user-attachments/assets/6711aa9b-79b4-497c-8390-11f31951e0a5" />
+
+- Sau khi tham gia đoạn chat bấm vài đoạn chat và chọn JOIN CHANNEL
+
+  <img width="1919" height="961" alt="Screenshot 2026-04-29 172523" src="https://github.com/user-attachments/assets/9194cfd2-c39a-4dee-a46c-17fdd0b86d10" />
+
+- kết quả là ở cả web của khách và admin đều sẽ xuất hiện bong bóng chat
+
+  <img width="1896" height="1021" alt="image" src="https://github.com/user-attachments/assets/a169762a-3bbe-4a13-8b9c-8070ab96b3de" />
+
+  <img width="1919" height="1018" alt="image" src="https://github.com/user-attachments/assets/d4aca7d3-6361-4fe9-abd6-f9fd7d792027" />
